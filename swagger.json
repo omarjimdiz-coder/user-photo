@@ -1,0 +1,835 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Create APIs at the speed of your thoughts",
+    "version": "1.0.0",
+    "title": "NocoDB",
+    "contact": {}
+  },
+  "host": "api.devdicio.net:8444",
+  "basePath": "/v1/sec_dev_interview/",
+  "tags": [
+    {
+      "name": "common"
+    },
+    {
+      "name": "datos",
+      "description": "Everything about your datos"
+    },
+    {
+      "name": "Procedures",
+      "description": ""
+    },
+    {
+      "name": "Functions",
+      "description": ""
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Add a new datos",
+        "description": "",
+        "operationId": "adddatos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "datos object that needs to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/datos"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Get list",
+        "description": "",
+        "operationId": "getdatos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fields",
+            "type": "string",
+            "description": "Comma separated fields from the model"
+          },
+          {
+            "in": "query",
+            "name": "bt",
+            "type": "string",
+            "description": "Comma separated parent table names(Belongs To)"
+          },
+          {
+            "in": "query",
+            "name": "hm",
+            "type": "string",
+            "description": "Comma separated child table names(Has Many)"
+          },
+          {
+            "in": "query",
+            "name": "mm",
+            "type": "string",
+            "description": "Comma separated child table names(Many to Many)"
+          },
+          {
+            "in": "query",
+            "name": "where",
+            "type": "string",
+            "description": "Where expression"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Page size limit",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Pagination offset",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "description": "Comma separated sort fields",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/datosNested"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/{datosId}": {
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Find datos by ID",
+        "description": "Returns a single datos",
+        "operationId": "getdatosById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "datosId",
+            "in": "path",
+            "description": "ID of datos to return. In case of composite key provide keys separated by ___",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "bt",
+            "type": "string",
+            "description": "Comma separated parent table names(Belongs To)"
+          },
+          {
+            "in": "query",
+            "name": "hm",
+            "type": "string",
+            "description": "Comma separated child table names(Has Many)"
+          },
+          {
+            "in": "query",
+            "name": "mm",
+            "type": "string",
+            "description": "Comma separated child table names(Many to Many)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/datosNested"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "datos not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Updates a datos",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "datosId",
+            "in": "path",
+            "description": "ID of datos to return. In case of composite key provide keys separated by ___",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "datos object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/datos"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Deletes a datos",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "datosId",
+            "in": "path",
+            "description": "ID of datos to return. In case of composite key provide keys separated by ___",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "datos not found"
+          }
+        }
+      }
+    },
+    "/bulk": {
+      "post": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Bulk datos insert",
+        "description": "",
+        "operationId": "bulkdatosInsert",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "datos objects",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/datos"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Updates a datos",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "datos objects with id",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/datos"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Deletes a datos",
+        "description": "",
+        "operationId": "deletedatos",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "datos objects contains id",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/datos"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "datos not found"
+          }
+        }
+      }
+    },
+    "/findOne": {
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Get first one from filtered data",
+        "description": "",
+        "operationId": "findOnedatos",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fields",
+            "type": "string",
+            "description": "Comma separated fields from the model"
+          },
+          {
+            "in": "query",
+            "name": "where",
+            "type": "string",
+            "description": "Where expression"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Page size limit",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Pagination offset",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "description": "Comma separated sort fields",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/datos"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/{datosId}/exists": {
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Check datos with provided ID exists",
+        "description": "Returns a single datos",
+        "operationId": "checkdatosExists",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "datosId",
+            "in": "path",
+            "description": "ID of datos to return. In case of composite key provide keys separated by ___",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "/count": {
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Get datos count",
+        "operationId": "getdatosCount",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "where",
+            "type": "string",
+            "description": "Where expression"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/groupby": {
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Group by column",
+        "description": "",
+        "operationId": "datosGroupByColumn",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "column_name",
+            "type": "string",
+            "description": "Column name"
+          },
+          {
+            "in": "query",
+            "name": "where",
+            "type": "string",
+            "description": "Where expression"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Page size limit",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Pagination offset",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "description": "Comma separated sort fieldst",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/datos"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/distribution": {
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "datosDistribution",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "column_name",
+            "type": "string",
+            "description": "Column name"
+          },
+          {
+            "in": "query",
+            "name": "min",
+            "description": "min value",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "max",
+            "description": "max value",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "step",
+            "description": "step value",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "steps",
+            "description": "steps value",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "func",
+            "description": "comma separated aggregation functions",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/distinct": {
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Get first one from filtered data",
+        "description": "",
+        "operationId": "datosDistinct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "column_name",
+            "type": "string",
+            "description": "Column name"
+          },
+          {
+            "in": "query",
+            "name": "where",
+            "type": "string",
+            "description": "Where expression"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Page size limit",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Pagination offset",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "description": "Comma separated sort fields",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/aggregate": {
+      "get": {
+        "tags": [
+          "datos"
+        ],
+        "summary": "Get first one from filtered data",
+        "description": "",
+        "operationId": "datosAggregate",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "column_name",
+            "type": "string",
+            "description": "Column name"
+          },
+          {
+            "in": "query",
+            "name": "func",
+            "type": "string",
+            "description": "Comma separated aggregate functions"
+          },
+          {
+            "in": "query",
+            "name": "having",
+            "type": "string",
+            "description": "Having expression"
+          },
+          {
+            "in": "query",
+            "name": "fields",
+            "type": "string",
+            "description": "Comma separated fields from the model"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Page size limit",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "description": "Pagination offset",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "description": "Comma separated sort fields",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/datos"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "datos": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "apellidoPaterno": {
+          "type": "string"
+        },
+        "apellidoMaterno": {
+          "type": "string"
+        },
+        "edad": {
+          "type": "integer"
+        },
+        "email": {
+          "type": "string"
+        },
+        "fechaNac": {
+          "type": "string"
+        },
+        "datos": {
+          "type": "object"
+        }
+      }
+    },
+    "datosNested": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "nombre": {
+          "type": "string"
+        },
+        "apellidoPaterno": {
+          "type": "string"
+        },
+        "apellidoMaterno": {
+          "type": "string"
+        },
+        "edad": {
+          "type": "integer"
+        },
+        "email": {
+          "type": "string"
+        },
+        "fechaNac": {
+          "type": "string"
+        },
+        "datos": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "xcAuth": []
+    }
+  ],
+  "externalDocs": {
+    "description": "Find out more about NocoDB",
+    "url": "http://nocodb.com"
+  },
+  "securityDefinitions": {
+    "xcAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "xc-auth"
+    }
+  }
+}
