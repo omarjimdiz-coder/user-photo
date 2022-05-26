@@ -1,39 +1,55 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Container } from 'reactstrap'
+import Usuario from './Usuario';
 
-const Menu = ({nameValue, photo,paternoValue,maternoValue,edadValue,emailValue,nacimientoValue,calleValue,numeroValue,coloniaValue,municipioValue,estadoValue,cpValue}) => {
+const Menu = ({picture}) => {
+
+  const [usuarios, setuUsuarios] = useState([]);
   
   useEffect(() => {
-    let canvas = document.getElementById("c");
-    let ctx = canvas.getContext("2d");
+    getUsers();
+  }, [])
 
-    let image = new Image();
-    image.onload = () => {
-      ctx.drawImage(image, 0, 0);
+  const getUsers = async() => {
+    
+    const url = "https://api.devdicio.net:8444/v1/sec_dev_interview";
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Host': 'api.devdicio.net',
+        'xc-token': "J38b4XQNLErVatKIh4oP1jw9e_wYWkS86Y04TMNP"
+        },
+      });
+    const data = await response.json();
+    
+    setuUsuarios(data);
+
+  }
+
+  const user = usuarios?.map(usuario => {
+
+    return{
+      id: usuario.id,
+      nombre: usuario.nombre,
+      apellidoPaterno: usuario.apellidoPaterno,
+      apellidoMaterno: usuario.apellidoMaterno,
+      edad: usuario.edad,
+      email: usuario.email,
+      nacimiento: usuario.fechaNac,
+      calle: usuario.datos?.calle,
+      numero: usuario.datos?.numero,
+      delegacion: usuario.datos?.delegacion,
+      estado: usuario.datos?.estado,
+      cp: usuario.datos?.cp
     }
-        
-    image.src = photo;
-  }, [photo])
+  });
 
+  const reverse = user.reverse();
 
   return (
     <Container>
-      <strong>fotografia:</strong>
-      <canvas id='c' width="200" height="80"></canvas>    
-      <p><strong>Nombre:</strong> {nameValue}</p>
-      <p><strong>Apellido Paterno:</strong> {paternoValue}</p>
-      <p><strong>Apellido Materno</strong> {maternoValue}</p>
-      <p><strong>Edad:</strong> {edadValue}</p>
-      <p><strong>Email:</strong> {emailValue}</p>
-      <p><strong>Fecha de nacimiento:</strong> {nacimientoValue}</p>
-      <h5>Datos Personales</h5>
-      <p><strong>Calle:</strong> {calleValue}</p>
-      <p><strong>Número:</strong> {numeroValue}</p>
-      <p><strong>Colonia:</strong> {coloniaValue}</p>
-      <p><strong>Municipio</strong> {municipioValue}</p>
-      <p><strong>Estado:</strong> {estadoValue}</p>
-      <p><strong>Código Postal:</strong> {cpValue}</p>
-
+      <Usuario reverse={reverse} />
     </Container>
   )
 }

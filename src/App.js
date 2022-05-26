@@ -1,44 +1,23 @@
-import { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
-import Formulario from "./components/Formulario";
+import Formulario from "./components/formulario";
 import Menu from "./components/Menu";
+import Navegador from "./components/Navegador";
+import './App.css';
+import { useState } from "react";
 
 
 function App() {
 
-  const [photo, setPhoto] = useState('');
-  const [nameValue, setNameValue] = useState('');
-  const [paternoValue, setPaternoValue] = useState('');
-  const [maternoValue, setMaternoValue] = useState('');
-  const [edadValue, setEdadValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
-  const [nacimientoValue, setNacimientoValue] = useState('');
-  const [calleValue, setCalleValue] = useState('');
-  const [numeroValue, setNumeroValue] = useState('');
-  const [coloniaValue, setColoniaValue] = useState('');
-  const [municipioValue, setMunicipioValue] = useState('');
-  const [estadoValue, setEstadoValue] = useState('');
-  const [cpValue, setCpValue] = useState('');
+  const [picture, setPicture] = useState('');
 
+  console.log(picture);
 
-  async function showDatas(photoValue, name, paterno, materno, edad, email, nacimiento, calle, numero, colonia, municipio, estado, cp){
+  async function showDatas(imagen, nombre, apellidoMaterno, apellidoPaterno, edad, email, fechaNac, datos){
 
-    const datas = {photoValue, name, paterno, materno, edad, email, nacimiento, calle, numero, colonia, municipio, estado, cp};
-
-    setNameValue(name);
-    setPhoto(photoValue);
-    setPaternoValue(paterno);
-    setMaternoValue(materno);
-    setEdadValue(edad);
-    setEmailValue(email);
-    setNacimientoValue(nacimiento);
-    setCalleValue(nacimiento);
-    setNumeroValue(numero);
-    setColoniaValue(colonia);
-    setMunicipioValue(municipio);
-    setEstadoValue(estado);
-    setCpValue(cp);
-
+    const datas = { imagen, nombre, apellidoMaterno, apellidoPaterno, edad, email, fechaNac, datos};
+    
+    console.log(imagen)
+    setPicture(imagen);
 
       const url = "https://api.devdicio.net:8444/v1/sec_dev_interview";
       const response = await fetch(url, {
@@ -58,27 +37,13 @@ function App() {
 
   return (
     <Container className="App">
+      <Navegador />
       <Row>
-
         <Col>
-          <Formulario showDatas={showDatas}/>
+          <Formulario showDatas={showDatas} />
         </Col>
         <Col>
-          <Menu 
-            nameValue={nameValue} 
-            photo={photo}
-            paternoValue={paternoValue}
-            maternoValue={maternoValue}
-            edadValue={edadValue}
-            emailValue={emailValue}
-            nacimientoValue={nacimientoValue}
-            calleValue={calleValue}
-            numeroValue={numeroValue}
-            coloniaValue={coloniaValue}
-            municipioValue={municipioValue}
-            estadoValue={estadoValue}
-            cpValue={cpValue}
-            />
+          <Menu picture={picture} />
         </Col>
       </Row>
     </Container>
